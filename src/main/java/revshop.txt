@@ -1,0 +1,29 @@
+revshop/
+ ├── app/
+ │    └── RevShopApp.java
+ ├── controller/
+ │    ├── AuthController.java
+ │    ├── BuyerController.java
+ │    └── SellerController.java
+ ├── service/
+ │    ├── AuthService.java
+ │    ├── ProductService.java
+ │    ├── CartService.java
+ │    ├── OrderService.java
+ │    └── NotificationService.java
+ ├── dao/
+ │    ├── UserDAO.java
+ │    ├── ProductDAO.java
+ │    ├── CartDAO.java
+ │    ├── OrderDAO.java
+ │    └── ReviewDAO.java
+ ├── model/
+ │    ├── User.java
+ │    ├── Product.java
+ │    ├── Order.java
+ │    ├── Cart.java
+ │    └── Review.java
+ └── util/
+      ├── DBConnection.java
+      ├── PasswordUtil.java
+      └── InputUtil.java
