@@ -1,0 +1,61 @@
+Application Architecture Diagram (showing modular/layered design)
+
+
+
+
+┌────────────────────────────────────────────┐
+│           Controller Layer (UI)             │
+│  ----------------------------------------  │
+│  • AuthController                           │
+│  • BuyerController                          │
+│  • SellerController                         │
+│                                            │
+│  (Handles console menus, user input,        │
+│   role-based navigation)                    │
+└───────────────────────▲────────────────────┘
+                        │
+                        │
+┌───────────────────────┴────────────────────┐
+│            Service Layer                    │
+│  ----------------------------------------  │
+│  • AuthService                              │
+│  • ProductService                           │
+│  • CartService                              │
+│  • OrderService                             │
+│  • ReviewService                            │
+│                                            │
+│  (Business logic, validations, workflows    │
+│   like checkout, cart rules, inventory)     │
+└───────────────────────▲────────────────────┘
+                        │
+                        │
+┌───────────────────────┴────────────────────┐
+│              DAO Layer                      │
+│  ----------------------------------------  │
+│  • UserDAO                                  │
+│  • SellerDAO                                │
+│  • ProductDAO                               │
+│  • CartDAO                                  │
+│  • OrderDAO                                 │
+│  • ReviewDAO                                │
+│  • FavoriteDAO                              │
+│  • NotificationDAO                          │
+│                                            │
+│  (JDBC + SQL, CRUD operations,              │
+│   ResultSet mapping)                        │
+└───────────────────────▲────────────────────┘
+                        │
+                        │
+┌───────────────────────┴────────────────────┐
+│             Database Layer                  │
+│  ----------------------------------------  │
+│              MySQL Database                 │
+│                                            │
+│  Tables:                                   │
+│  • users, sellers                           │
+│  • products                                │
+│  • carts, cart_items                       │
+│  • orders, order_items                     │
+│  • reviews, favorites                      │
+│  • notifications                           │
+└────────────────────────────────────────────┘
