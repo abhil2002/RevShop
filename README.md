@@ -1,293 +1,87 @@
+# 🚀 RevShop – Full-Stack Enterprise E-Commerce Ecosystem
 
-# 🚀 RevShop – Console-Based E-Commerce Application
+**RevShop** is a high-performance, dual-portal e-commerce platform built with a **Decoupled 3-Tier Architecture**. It features a reactive **Angular 18** frontend and a robust **Spring Boot 3** REST API, providing a seamless marketplace experience for both **Buyers** and **Sellers**.
 
-**RevShop** is a **Java-based Console E-Commerce Application** built using **Core Java, JDBC, MySQL, and a clean Layered (N-Tier) Architecture**.
-It provides **role-based access for Buyers and Sellers** to simulate real-world e-commerce workflows such as product browsing, cart management, order processing, inventory control, reviews, favorites, and notifications.
-
-The application is designed with **scalability, modularity, and maintainability** in mind and can be extended into a **Spring Boot or Microservices-based web application** in future phases.
+By moving away from a monolithic console structure, this version leverages **Stateless Authentication (JWT)** and **Reactive State Management (Signals)** to ensure enterprise-grade scalability and security.
 
 ---
 
-## 📌 Key Features
+## 🛠️ Modern Tech Stack
 
-### 🛍 Buyer
-
-* Secure registration and login
-* Browse all available products
-* Search products by keyword
-* Filter products by category
-* Add products to cart with quantity
-* Remove products from cart
-* View cart with calculated total
-* Checkout with shipping and billing details
-* Simulated payment methods (UPI / Card / COD)
-* View order history
-* Review and rate purchased products
-* Save products as favorites (wishlist)
-* Receive in-app notifications for order placement
+| Layer | Technologies |
+| --- | --- |
+| **Frontend** | **Angular 18 (Signals)**, TypeScript, SCSS, Angular Material, RxJS |
+| **Backend** | **Spring Boot 3**, Spring Security, Spring Data JPA |
+| **Database** | **MySQL** (ACID Compliant) |
+| **Security** | **JWT (JSON Web Tokens)**, BCrypt Password Hashing, Role-Based Access Control (RBAC) |
+| **Build Tools** | Maven, NPM |
 
 ---
 
-### 🏪 Seller
+## 🏗️ Architectural Excellence
 
-* Registration with business details
-* Secure login
-* Add new products with description, category, and pricing
-* Update or delete existing products
-* Set MRP and discounted price
-* Manage inventory stock
-* Configure inventory threshold values
-* Receive low-stock alerts via console
-* View orders placed for their products
-* View customer reviews and ratings
-* Receive notifications when orders are placed
+RevShop follows a **Separation of Concerns (SoC)** model, allowing the frontend and backend to scale independently.
 
----
+### **1. Presentation Layer (Angular 18)**
 
-## 🏗️ Architecture Overview
+* **Standalone Components**: Modular and lightweight UI structure.
+* **Signals**: Modern reactive state management for high-performance UI updates.
+* **HTTP Interceptors**: Centralized JWT injection and global error handling.
+* **Router Guards**: Securing dashboards based on user roles (`BUYER` vs `SELLER`).
 
-RevShop follows a **Layered (N-Tier) Architecture**, ensuring **clear separation of concerns and scalability**.
+### **2. Business Logic Layer (Spring Boot 3)**
 
-```
-Controller Layer → Service Layer → DAO Layer → Database
-```
+* **RESTful API**: Stateless endpoints for multi-client support.
+* **Global Exception Handling**: Centralized `@RestControllerAdvice` for consistent API error responses.
+* **DTO Pattern**: Decoupling database entities from the API response for enhanced security.
 
-### Layer Responsibilities
+### **3. Persistence Layer (PostgreSQL & JPA)**
 
-* **Controller Layer (`controller`)**
-  Handles console-based menus, user input, and role-based navigation.
-
-* **Service Layer (`service`)**
-  Contains business logic, validations, and workflows such as cart management, checkout processing, inventory updates, and payment simulation.
-
-* **DAO Layer (`dao`)**
-  Responsible for all database operations using JDBC, including CRUD operations and SQL execution.
-
-* **Model Layer (`model`)**
-  POJO/entity classes representing database tables.
-
-* **Utility Layer (`util`)**
-  Common utilities such as database connection handling and password hashing.
+* **Hibernate ORM**: Simplified database interactions and automated schema management.
+* **Normalised ERD**: Optimized for **3rd Normal Form (3NF)** to ensure data integrity.
 
 ---
 
-## 📂 Project Structure
+## 📌 Key Feature Enhancements
 
-```
-revshop
-│
-├── database
-│   ├── revshop_schema.sql
-│   ├── revshop_seed.sql
-│   └── revshop_updates.sql
-│
-├── src/main/java
-│   ├── app
-│   │   └── RevShopApp.java
-│   │
-│   ├── controller
-│   │   ├── AuthController
-│   │   ├── BuyerController
-│   │   └── SellerController
-│   │
-│   ├── service
-│   │   ├── AuthService
-│   │   ├── ProductService
-│   │   ├── CartService
-│   │   ├── OrderService
-│   │   └── ReviewService
-│   │
-│   ├── dao
-│   │   ├── UserDAO
-│   │   ├── SellerDAO
-│   │   ├── ProductDAO
-│   │   ├── CartDAO
-│   │   ├── OrderDAO
-│   │   ├── ReviewDAO
-│   │   ├── FavoriteDAO
-│   │   └── NotificationDAO
-│   │
-│   ├── model
-│   │   ├── User
-│   │   ├── Product
-│   │   ├── CartItem
-│   │   └── Order
-│   │
-│   └── util
-│       ├── DBConnection
-│       └── PasswordUtil
-│
-├── pom.xml
-└── README.md
-```
+### 🛍️ Buyer Portal
+
+* **Reactive Search**: Instant product filtering using RxJS `debounceTime`.
+* **Stateless Checkout**: Secure order placement via JWT-authorized sessions.
+* **Order History**: Real-time tracking of transaction status and order items.
+
+### 🏪 Seller Dashboard
+
+* **Inventory Intelligence**: Automated low-stock alerts and threshold management.
+* **Business Analytics**: High-level overview of revenue and order volume.
+* **Product Management**: Full CRUD operations with image URL support and category mapping.
 
 ---
 
-## 📊 Entity Relationship Diagram (ERD)
+## 🔄 Core Workflow: Order & Inventory
 
-The system is centered around **users, products, and orders**, forming the core of the e-commerce workflow.
-
-### Core Relationships
-
-* `users → sellers (1 : 1)`
-  Each seller is a registered user with business details.
-
-* `sellers → products (1 : N)`
-  A seller can list multiple products.
-
-* `users → carts (1 : 1)`
-  Each buyer has one active cart.
-
-* `carts → cart_items (1 : N)`
-  A cart can contain multiple products.
-
-* `orders → order_items (1 : N)`
-  Each order consists of multiple purchased items.
-
-* `products → reviews (1 : N)`
-  Products can receive multiple reviews.
-
-* `users → notifications (1 : N)`
-  Users receive system-generated notifications.
-
-📌 This ERD ensures **data normalization, referential integrity, and scalability**.
+1. **Transaction Trigger**: Buyer submits a checkout request via the Angular UI.
+2. **Security Check**: Spring Security validates the **JWT** and checks for the `BUYER` role.
+3. **Atomic Operation**: The Service layer uses a `@Transactional` block to create an order and decrement inventory simultaneously.
+4. **Notification**: If stock falls below the `stock_threshold`, the `NotificationService` triggers a real-time alert for the Seller.
 
 ---
 
-## 🔄 System Workflows
+## 🚦 How to Run the Ecosystem
 
-### 1️⃣ Buyer Order Placement Workflow
+### **Backend Setup**
 
-```
-Buyer browses products
-        ↓
-Adds items to cart
-        ↓
-Checkout with address & payment method
-        ↓
-Order created
-        ↓
-Inventory updated
-        ↓
-Notifications sent to buyer & seller
-```
+1. Update `application.properties` with your **PostgreSQL** credentials.
+2. Run `mvn spring-boot:run`.
 
----
+### **Frontend Setup**
 
-### 2️⃣ Seller Inventory Monitoring Workflow
-
-```
-Seller adds products
-        ↓
-Stock decreases on orders
-        ↓
-Stock reaches threshold
-        ↓
-Low-stock alert displayed in console
-```
-
----
-
-## 🗄️ Database Details
-
-### Database Name
-
-```
-revshop
-```
-
-### Major Tables
-
-* users
-* sellers
-* products
-* carts
-* cart_items
-* orders
-* order_items
-* reviews
-* favorites
-* notifications
-
----
-
-## ⚙️ Configuration
-
-### Database Configuration (`DBConnection.java`)
-
-```java
-jdbc:mysql://localhost:3306/revshop
-username: root
-password: your_password
-```
-
----
-
-## ▶️ How to Run the Application
-
-1. Import the project into **IntelliJ IDEA / Eclipse**
-2. Create the MySQL database and execute SQL scripts
-3. Update database credentials in `DBConnection.java`
-4. Build the project using Maven:
-
-   ```bash
-   mvn clean install
-   ```
-5. Run:
-
-   ```
-   app.RevShopApp
-   ```
-
----
-
-## 🔐 Authentication & Security
-
-* Secure login with hashed passwords (SHA-256)
-* Role-based access control (Buyer / Seller)
-* Security question-based password recovery
-* Change password functionality
-* Centralized authentication via `AuthService`
-
----
-
-## 🧪 Error Handling & Validation
-
-* Input validations at service layer
-* Graceful handling of invalid operations
-* JDBC exception handling to prevent application crashes
-* Clear console messages for user feedback
-
----
-
-## 🛠️ Tech Stack
-
-* **Language:** Java 21
-* **Database:** MySQL
-* **Architecture:** Layered (N-Tier)
-* **Build Tool:** Maven
-* **Connectivity:** JDBC
-* **Security:** Password Hashing (SHA-256)
-* **Version Control:** Git
-* **Testing:** JUnit (optional / extensible)
-
----
-
-## 🚀 Future Enhancements
-
-* Web UI using Spring Boot & REST APIs
-* JWT-based authentication
-* Microservices architecture
-* Real payment gateway integration
-* Admin dashboard & analytics
-* Email / SMS notifications
+1. Navigate to the frontend directory.
+2. Install dependencies: `npm install`.
+3. Start the dev server: `ng serve`.
 
 ---
 
 ## 👨‍💻 Author
 
-**Abhishek Satish Lawhale**
-Java fullStack Developer
-
-
-
+**Abhishek Satish Lawhale** *Java Full Stack Developer* Specializing in **Spring Boot**, **Angular 18**, and **Enterprise System Design**.
