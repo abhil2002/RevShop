@@ -1,127 +1,141 @@
-# 🚀 RevShop – Full-Stack Enterprise E-Commerce Ecosystem
 
-**RevShop** is a high-performance, dual-portal e-commerce platform built with a **Decoupled 3-Tier Architecture**. It features a reactive **Angular 18** frontend and a robust **Spring Boot 3** REST API, providing a seamless marketplace experience for both **Buyers** and **Sellers**.
 
-By moving away from a monolithic console structure, this version leverages **Stateless Authentication (JWT)** and **Reactive State Management (Signals)** to ensure enterprise-grade scalability and security.
+# 🛒 RevShop – Full-Stack E-Commerce Platform
+
+**RevShop** is a sophisticated, role-based E-Commerce ecosystem designed for seamless shopping and business management. Built with a scalable **N-Tier Architecture**, it bridges the gap between a robust Java backend and a responsive user interface, simulating real-world retail workflows from inventory tracking to secure checkout.
 
 ---
 
-## 🛠️ Modern Tech Stack
+## 🏗️ Architecture Overview
 
-| Layer | Technologies |
+The system follows a strict **Layered (N-Tier) Architecture** to ensure a separation of concerns, making the transition from a Console-based app to a Web-based Spring Boot application seamless.
+
+* **Presentation Layer:** Handles user interaction (Console UI / Web Controllers).
+* **Service Layer:** The "Brain" containing business logic, validations, and workflows.
+* **DAO (Data Access) Layer:** Manages persistence and SQL execution via JDBC.
+* **Model Layer:** POJO entities representing the core business domain.
+* **Utility Layer:** Shared resources like DB connections and security hashing.
+
+---
+
+## 🚀 Key Features
+
+### 🛍️ For Buyers
+
+* **Smart Discovery:** Browse, keyword search, and category-based filtering.
+* **Cart Management:** Real-time total calculation and quantity adjustments.
+* **Checkout Workflow:** Multi-mode simulated payments (UPI, Card, COD).
+* **Personalization:** Wishlist (Favorites), order history, and product reviews.
+* **Notifications:** Instant in-app alerts for order confirmations.
+
+### 🏪 For Sellers
+
+* **Inventory Control:** Manage products with MRP, discounts, and descriptions.
+* **Stock Intelligence:** Configure low-stock thresholds with automatic console alerts.
+* **Business Analytics:** View incoming orders and track customer feedback.
+* **Security:** Business profile isolation from standard user data.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
 | --- | --- |
-| **Frontend** | **Angular 18 (Signals)**, TypeScript, SCSS, Angular Material, RxJS |
-| **Backend** | **Spring Boot 3**, Spring Security, Spring Data JPA |
-| **Database** | **MySQL** (ACID Compliant) |
-| **Security** | **JWT (JSON Web Tokens)**, BCrypt Password Hashing, Role-Based Access Control (RBAC) |
-| **Build Tools** | Maven, NPM |
+| **Language** | Java 21 (LTS) |
+| **Framework** | Spring Boot (Planned/Current) |
+| **Database** | MySQL 8.0 |
+| **Persistence** | JDBC / Spring Data JPA |
+| **Security** | SHA-256 Password Hashing |
+| **Build Tool** | Maven |
+| **Version Control** | Git |
 
 ---
 
-## 🏗️ Architectural Excellence
+## 📂 Project Structure
 
-RevShop follows a **Separation of Concerns (SoC)** model, allowing the frontend and backend to scale independently.
+```text
+revshop
+├── 📂 database             # SQL Schemas, Seeds, and Updates
+├── 📂 src/main/java
+│   ├── 📦 app              # Main Application Entry Point
+│   ├── 📦 controller       # Role-based Request Handling
+│   ├── 📦 service          # Business Logic & Validations
+│   ├── 📦 dao              # JDBC/Persistence Operations
+│   ├── 📦 model            # Entity Classes (User, Product, Order)
+│   └── 📦 util             # DB Connection & Security Utils
+├── 📂 src/main/resources   # Frontend Assets (HTML/CSS/JS) & Config
+├── 📄 pom.xml              # Maven Dependencies
+└── 📄 README.md            # Documentation
 
-### **1. Presentation Layer (Angular 18)**
-
-* **Standalone Components**: Modular and lightweight UI structure.
-* **Signals**: Modern reactive state management for high-performance UI updates.
-* **HTTP Interceptors**: Centralized JWT injection and global error handling.
-* **Router Guards**: Securing dashboards based on user roles (`BUYER` vs `SELLER`).
-
-### **2. Business Logic Layer (Spring Boot 3)**
-
-* **RESTful API**: Stateless endpoints for multi-client support.
-* **Global Exception Handling**: Centralized `@RestControllerAdvice` for consistent API error responses.
-* **DTO Pattern**: Decoupling database entities from the API response for enhanced security.
-
-### **3. Persistence Layer (PostgreSQL & JPA)**
-
-* **Hibernate ORM**: Simplified database interactions and automated schema management.
-* **Normalised ERD**: Optimized for **3rd Normal Form (3NF)** to ensure data integrity.
+```
 
 ---
 
-## 📌 Key Feature Enhancements
+## 📊 Database Design (ERD)
 
-### 🛍️ Buyer Portal
+The relational schema is optimized for data integrity and high performance.
 
-* **Reactive Search**: Instant product filtering using RxJS `debounceTime`.
-* **Stateless Checkout**: Secure order placement via JWT-authorized sessions.
-* **Order History**: Real-time tracking of transaction status and order items.
-
-### 🏪 Seller Dashboard
-
-* **Inventory Intelligence**: Automated low-stock alerts and threshold management.
-* **Business Analytics**: High-level overview of revenue and order volume.
-* **Product Management**: Full CRUD operations with image URL support and category mapping.
-
-### Features
-
-Buyer Features 
-
-| **Feature** | **API Endpoint** | Desc |
-| --- | --- | --- |
-| **Authentication** | `POST /api/auth/login` & `register` | Handles register, Login and generates stateless **JWT tokens** for session management. |
-| **Product Discovery** | `GET /api/products` & `products/{id}` | Retrieves the  specific item details for the Buyer portal. |
-| **Search & Filter** | `GET /api/products/search` & `/category/{c}` | Provides full product catalog . |
-| **Shopping Cart** | `GET`, `POST`, `PUT`, `DELETE /api/cart` | Manages persistent user carts, allowing for item addition, quantity updates, and removal. |
-| **Favorites** | `GET`, `POST`, `DELETE /api/favorites` | Enables buyers to manage a personalized wishlist of products stored in **PostgreSQL**. |
-| **Checkout** | `POST /api/orders/checkout` | Processes the cart order, generate record, update inventory |
-| **Order History** | `GET /api/orders` | Fetches a historical list of all completed and pending transactions for the authenticated user. |
-| **Notifications** | `GET` & `PUT /api/notifications` | Manages user alerts, such as order confirmations for Buyers or low-stock warnings for Sellers. |
-| **Reviews** | `POST /api/reviews` & `GET /api/reviews/{id}` | Facilitates social proof by allowing buyers to submit and view product ratings and comments. |
-|  |  |  |
-
-Seller Features 
-
-| **Requirement** | **Implementation Detail** |
-| --- | --- |
-| **View Buyer Info** | Displayed in the `customer` column (`o.buyerName`). |
-| **Order Details** | Shown via `productName`, `quantity`, and `totalAmount`. |
-| **Notifications** | Can be handled via `MatSnackBar` or a badge in the sidebar. |
-| **Low Stock Alerts** | Managed in the `SellerDashboard` via threshold signals. |
-
-Testing
-
-| **Test Level** | **Scope** | **Status** |
-| --- | --- | --- |
-| **Unit Testing** | Service logic for price calculation and threshold checks. | ✅ Passed |
-| **Integration Testing** | API connectivity between Angular and Spring Boot NotificationController. | ✅ Passed |
-| **UAT (Buyer)** | Successful flow from "Add to Cart" to "Order Confirmation." | ✅ Passed |
-| **UAT (Seller)** | Verification of "Low Stock Alert" when quantity falls below threshold. | ✅ Passed |
-| **Security Testing** | Verified `roleGuard` prevents Buyers from accessing Seller Dashboard. | ✅ Passed |
-
-
-## 🔄 Core Workflow: Order & Inventory
-
-1. **Transaction Trigger**: Buyer submits a checkout request via the Angular UI.
-2. **Security Check**: Spring Security validates the **JWT** and checks for the `BUYER` role.
-3. **Atomic Operation**: The Service layer uses a `@Transactional` block to create an order and decrement inventory simultaneously.
-4. **Notification**: If stock falls below the `stock_threshold`, the `NotificationService` triggers a real-time alert for the Seller.
+* **Users & Sellers:** 1:1 Relationship for business-specific data.
+* **Products & Inventory:** 1:N Relationship with Sellers.
+* **Order Tracking:** Deep mapping between `orders` and `order_items` to preserve historical pricing.
 
 ---
 
-<img width="622" height="1004" alt="ERD" src="https://github.com/user-attachments/assets/5182ea4d-5006-4c00-a91a-b520f691218e" />
+## 🔄 Core Workflows
 
+### 1. The Purchase Journey
 
+1. **Selection:** Buyer adds items to Cart.
+2. **Validation:** Service layer checks stock availability.
+3. **Transaction:** Order is logged; Inventory is decremented.
+4. **Alerting:** Buyer gets a receipt; Seller gets a "New Order" notification.
 
+### 2. Low-Stock Alert System
 
-## 🚦 How to Run the Ecosystem
+```java
+if (currentStock <= thresholdValue) {
+    NotificationService.sendAlert(sellerId, "Low Stock Warning!");
+}
 
-### **Backend Setup**
-
-1. Update `application.properties` with your **PostgreSQL** credentials.
-2. Run `mvn spring-boot:run`.
-
-### **Frontend Setup**
-
-1. Navigate to the frontend directory.
-2. Install dependencies: `npm install`.
-3. Start the dev server: `ng serve`.
+```
 
 ---
 
-## 👨‍💻 Author
+## ⚙️ Getting Started
 
-**Abhishek Satish Lawhale** *Java Full Stack Developer* Specializing in **Spring Boot**, **Angular 18**, and **Enterprise System Design**.
+1. **Clone the Repo:**
+```bash
+git clone https://github.com/your-username/revshop.git
+
+```
+
+
+2. **Configure Database:**
+Update `DBConnection.java` or `application.properties` with your MySQL credentials.
+3. **Build & Install:**
+```bash
+mvn clean install
+
+```
+
+
+4. **Run:**
+```bash
+java -cp target/revshop-1.0.jar app.RevShopApp
+
+```
+
+
+
+---
+
+## 🔮 Future Roadmap
+
+* [ ] **Web UI:** Transitioning to Spring Boot Thymeleaf/React.
+* [ ] **Security:** Implementing JWT (JSON Web Tokens) for stateless auth.
+* [ ] **Cloud:** Deploying to AWS/Azure using Docker containers.
+* [ ] **External APIs:** Integration with Stripe/Razorpay for actual payments.
+
+---
+
+**Developed by Abhishek Lawhale *Building scalable solutions for the modern web.*
