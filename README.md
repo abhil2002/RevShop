@@ -58,18 +58,16 @@ RevShop follows a **Separation of Concerns (SoC)** model, allowing the frontend 
 
 ### Features
 
-| **Feature** | **API Endpoint** | **Implementation Status** |
-| --- | --- | --- |
-| **Authentication** | `POST /api/auth/login` & `register` | **Completed** |
-| **Product Discovery** | `GET /api/products` & `products/{id}` | **Completed** (Grid & Details) |
-| **Search & Filter** | `GET /api/products/search` & `/category/{c}` | **Completed** (Integrated in Marketplace) |
-| **Shopping Cart** | `GET`, `POST`, `PUT`, `DELETE /api/cart` | **Completed** (Full CRUD) |
-| **Favorites** | `GET`, `POST`, `DELETE /api/favorites` | **Completed** |
-| **Checkout** | `POST /api/orders/checkout` | **Completed** |
-| **Order History** | `GET /api/orders` | **Completed** (List & Details) |
-| **Notifications** | `GET` & `PUT /api/notifications` | **Completed** |
-| **Reviews** | `POST /api/reviews` & `GET /api/reviews/{id}` | Completed(Backend supports it) |
----
+Feature,API Endpoint,Short Description
+Authentication,POST /api/auth/login & register,Handles secure user onboarding and generates stateless JWT tokens for session management.
+Product Discovery,GET /api/products & products/{id},Retrieves the full product catalog or specific item details for the Buyer portal.
+Search & Filter,GET /api/products/search & /category/{c},Provides real-time product discovery using JPA derived queries and category-based filtering.
+Shopping Cart,"GET, POST, PUT, DELETE /api/cart","Manages persistent user carts, allowing for item addition, quantity updates, and removal."
+Favorites,"GET, POST, DELETE /api/favorites",Enables buyers to manage a personalized wishlist of products stored in PostgreSQL.
+Checkout,POST /api/orders/checkout,"Processes the cart into a formal order, generating a transaction record and updating inventory."
+Order History,GET /api/orders,Fetches a historical list of all completed and pending transactions for the authenticated user.
+Notifications,GET & PUT /api/notifications,"Manages user alerts, such as order confirmations for Buyers or low-stock warnings for Sellers."
+Reviews,POST /api/reviews & GET /api/reviews/{id},Facilitates social proof by allowing buyers to submit and view product ratings and comments.
 
 ## 🔄 Core Workflow: Order & Inventory
 
