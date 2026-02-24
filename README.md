@@ -58,16 +58,41 @@ RevShop follows a **Separation of Concerns (SoC)** model, allowing the frontend 
 
 ### Features
 
-Feature	API Endpoint	Short Description
-Authentication	POST /api/auth/login & register	Handles register, Login and generates stateless JWT tokens for session management.
-Product Discovery	GET /api/products & products/{id}	Retrieves the  specific item details for the Buyer portal.
-Search & Filter	GET /api/products/search & /category/{c}	Provides full product catalog .
-Shopping Cart	GET, POST, PUT, DELETE /api/cart	Manages persistent user carts, allowing for item addition, quantity updates, and removal.
-Favorites	GET, POST, DELETE /api/favorites	Enables buyers to manage a personalized wishlist of products stored in PostgreSQL.
-Checkout	POST /api/orders/checkout	Processes the cart order, generate record, update inventory
-Order History	GET /api/orders	Fetches a historical list of all completed and pending transactions for the authenticated user.
-Notifications	GET & PUT /api/notifications	Manages user alerts, such as order confirmations for Buyers or low-stock warnings for Sellers.
-Reviews	POST /api/reviews & GET /api/reviews/{id}	Facilitates social proof by allowing buyers to submit and view product ratings and comments.
+Buyer Features 
+
+| **Feature** | **API Endpoint** | Desc |
+| --- | --- | --- |
+| **Authentication** | `POST /api/auth/login` & `register` | Handles register, Login and generates stateless **JWT tokens** for session management. |
+| **Product Discovery** | `GET /api/products` & `products/{id}` | Retrieves the  specific item details for the Buyer portal. |
+| **Search & Filter** | `GET /api/products/search` & `/category/{c}` | Provides full product catalog . |
+| **Shopping Cart** | `GET`, `POST`, `PUT`, `DELETE /api/cart` | Manages persistent user carts, allowing for item addition, quantity updates, and removal. |
+| **Favorites** | `GET`, `POST`, `DELETE /api/favorites` | Enables buyers to manage a personalized wishlist of products stored in **PostgreSQL**. |
+| **Checkout** | `POST /api/orders/checkout` | Processes the cart order, generate record, update inventory |
+| **Order History** | `GET /api/orders` | Fetches a historical list of all completed and pending transactions for the authenticated user. |
+| **Notifications** | `GET` & `PUT /api/notifications` | Manages user alerts, such as order confirmations for Buyers or low-stock warnings for Sellers. |
+| **Reviews** | `POST /api/reviews` & `GET /api/reviews/{id}` | Facilitates social proof by allowing buyers to submit and view product ratings and comments. |
+|  |  |  |
+
+Seller Features 
+
+| **Requirement** | **Implementation Detail** |
+| --- | --- |
+| **View Buyer Info** | Displayed in the `customer` column (`o.buyerName`). |
+| **Order Details** | Shown via `productName`, `quantity`, and `totalAmount`. |
+| **Notifications** | Can be handled via `MatSnackBar` or a badge in the sidebar. |
+| **Low Stock Alerts** | Managed in the `SellerDashboard` via threshold signals. |
+
+Testing
+
+| **Test Level** | **Scope** | **Status** |
+| --- | --- | --- |
+| **Unit Testing** | Service logic for price calculation and threshold checks. | ✅ Passed |
+| **Integration Testing** | API connectivity between Angular and Spring Boot NotificationController. | ✅ Passed |
+| **UAT (Buyer)** | Successful flow from "Add to Cart" to "Order Confirmation." | ✅ Passed |
+| **UAT (Seller)** | Verification of "Low Stock Alert" when quantity falls below threshold. | ✅ Passed |
+| **Security Testing** | Verified `roleGuard` prevents Buyers from accessing Seller Dashboard. | ✅ Passed |
+
+
 ## 🔄 Core Workflow: Order & Inventory
 
 1. **Transaction Trigger**: Buyer submits a checkout request via the Angular UI.
@@ -76,6 +101,11 @@ Reviews	POST /api/reviews & GET /api/reviews/{id}	Facilitates social proof by al
 4. **Notification**: If stock falls below the `stock_threshold`, the `NotificationService` triggers a real-time alert for the Seller.
 
 ---
+
+<img width="622" height="1004" alt="ERD" src="https://github.com/user-attachments/assets/5182ea4d-5006-4c00-a91a-b520f691218e" />
+
+
+
 
 ## 🚦 How to Run the Ecosystem
 
