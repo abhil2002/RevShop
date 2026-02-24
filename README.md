@@ -56,6 +56,19 @@ RevShop follows a **Separation of Concerns (SoC)** model, allowing the frontend 
 * **Business Analytics**: High-level overview of revenue and order volume.
 * **Product Management**: Full CRUD operations with image URL support and category mapping.
 
+### Features
+
+| **Feature** | **API Endpoint** | **Implementation Status** |
+| --- | --- | --- |
+| **Authentication** | `POST /api/auth/login` & `register` | **Completed** |
+| **Product Discovery** | `GET /api/products` & `products/{id}` | **Completed** (Grid & Details) |
+| **Search & Filter** | `GET /api/products/search` & `/category/{c}` | **Completed** (Integrated in Marketplace) |
+| **Shopping Cart** | `GET`, `POST`, `PUT`, `DELETE /api/cart` | **Completed** (Full CRUD) |
+| **Favorites** | `GET`, `POST`, `DELETE /api/favorites` | **Completed** |
+| **Checkout** | `POST /api/orders/checkout` | **Completed** |
+| **Order History** | `GET /api/orders` | **Completed** (List & Details) |
+| **Notifications** | `GET` & `PUT /api/notifications` | **Completed** |
+| **Reviews** | `POST /api/reviews` & `GET /api/reviews/{id}` | Completed(Backend supports it) |
 ---
 
 ## 🔄 Core Workflow: Order & Inventory
